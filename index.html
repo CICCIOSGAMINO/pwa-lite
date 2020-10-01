@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pwa-lite(@cicciosgamino)">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>PWA Lite</title>
+    <meta name="description" content="PWA Lite - Web component app basic layout">
+
+    <!-- Use relative path with base and rootPath --> 
+    <base href="/">
+
+    <link rel="icon" href="images/favicon.ico">
+    <link id="favicon" rel="shortcut icon" href="images/favicon/favicon-16.png" sizes="16x16">
+    <link id="favicon" rel="shortcut icon" href="images/favicon/favicon-32.png" sizes="32x32">
+    <link id="favicon" rel="shortcut icon" href="images/favicon/favicon-64.png" sizes="64x64">
+    <link id="favicon" rel="shortcut icon" href="images/favicon/favicon-96.png" sizes="96x96">
+
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="/manifest.webmanifest">
+
+    <!-- See https://goo.gl/qRE0vM -->
+    <meta name="theme-color" content="#fff">
+
+    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="PWA Lite">
+    <link rel="icon" sizes="128x128" href="images/manifest/icon128x128.png">
+    <link rel="icon" sizes="192x192" href="images/manifest/icon192x192.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PWA Lite">
+
+    <!-- Preload the Logo SVG -->
+    <link rel="preload" as="image" href="images/pwa.svg">
+
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="images/manifest/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/manifest/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="images/manifest/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/manifest/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/manifest/icon-192x192.png">
+    
+
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/manifest/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#fff">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Twitter --> 
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@cicciosgamino">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="PWA Lite">
+    <meta property="og:image" content="images/manifest/icon-144x144.png" />
+
+    <!-- Facebook OpenGraph --> 
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="PWA Lite">
+
+    <!-- PT (Performance Tip) Hint to the browser to start the handshake for fonts site -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+
+    <!-- Load and register pre-caching Service Worker -->
+    <script>
+      const baseUrl = document.querySelector('base').href;
+      console.log(`@URL >> ${baseUrl}`)
+
+      /*
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register(baseUrl + 'service-worker.js', {
+            scope: '/'
+          });
+        });
+      }  */ 
+      
+    </script>
+
+    <!-- Roboto & Material -->
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" as="style" type="text/css">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" as="style" type="text/css">
+
+    <!-- Add any global styles for body, document, etc. -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+    
+    <style>
+      @font-face {
+        font-family: 'Pacifico';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/Q_Z9mv4hySLTMoMjnk_rCXYhjbSpvc47ee6xR_80Hnw.woff2) format('woff2');
+        /* The browser draws the text immediately in the fallback font if the font
+           isn't loaded, then swaps it with the webfont when it eventually loads
+           See: https://developers.google.com/web/updates/2016/02/font-display
+        */
+        font-display: swap;
+      }
+
+      body {
+        margin: 0;
+        /* This is a font-stack that tries to use the system-default sans-serifs first */
+        font-family: Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+        line-height: 1.5;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        background: linear-gradient(to bottom right, #fff, #78909C); 
+      }
+
+      pwa-lite:not([dark]) {
+        /* custom vars light theme */ 
+        --mdc-theme-primary: #3C00E0;
+        --mdc-theme-primary-variant: #6114EE;
+        --mdc-theme-secondary: #16A94B;
+        --mdc-theme-secondary-variant: #72CE89;
+        --mdc-theme-background: whitesmoke;
+        --mdc-theme-surface: whitesmoke;
+        --mdc-theme-on-primary: whitesmoke;
+        --mdc-theme-on-second: #000;
+        --mdc-theme-on-background: #000;
+        --mdc-theme-on-surface: #000;
+
+        --mdc-error: #B00020;
+        --mdc-onerror: #FFFFFF;
+      }
+
+      pwa-lite[dark] {
+        /* material design grey scale */ 
+        --md-grey-100: #F5F5F5;
+        --md-grey-300: #E0E0E0;
+        --md-grey-500: #959595;
+        --md-grey-700: #616161;
+        --md-grey-900: #212121;
+        /* custom vars dark theme */ 
+        --mdc-theme-primary: #3C00E0;
+        --mdc-theme-background: var(--md-grey-900);
+
+
+      }
+
+      /* styling for rendering while resources are loading  TEXT-VERSION
+      <%= pwaNameTag  %>[unresolved] {
+        display: block;
+        min-height: 101vh;
+        line-height: 68px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.3em;
+        color: #f5f5f5;
+        padding: 0 16px;
+        overflow: visible;
+      } */ 
+
+      /* styling for rendering while resources are laoding   GIF-VERSION */
+      pwa-lite[unresolved] {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('../images/pwa.svg') center/340px no-repeat;
+        margin-top: -120px;
+      }
+    </style>
+  </head>
+  <body>
+    <pwa-lite unresolved title="Pwa Lite"></pwa-lite>
+
+    <noscript>
+      Please enable JavaScript to view this website.
+    </noscript>
+    <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs 
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> --> 
+
+    <!-- Built with love using PWA Starter Kit -->
+    <script type="module" src="./pwa-lite.js" crossorigin></script>
+
+    <!-- listen for prefers-color-scheme: dark media query -->
+    <script>
+      window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
+        const pwaLite = document.querySelector('pwa-lite')
+        const darkModeOn = e.matches;
+        darkModeOn ? 
+          pwaLite.setAttribute('dark', ``) : 
+          pwaLite.removeAttribute('dark')
+        
+        console.log(`Dark mode is ${darkModeOn ? '🌒 on' : '☀️ off'}.`)
+      })
+    </script>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', (event) => {
+        // Console a Welcome message for Developers 
+        console.log(
+          `%c %cPwa Lite \n%cChamaeleonidae lite PWA `,
+          `padding:10px 11px 5px 11px; background:url(${baseUrl}/images/manifest/icon96x96.png) no-repeat;background-size:cover;`,
+          `font-size: 32px; color: #673AB7`,
+          `font-size: 16px; color: rgb(40, 51, 76);`
+        );
+
+        document.querySelector('pwa-lite').removeAttribute('unresolved');
+      });
+    </script>
+
+</body>
+</html>
