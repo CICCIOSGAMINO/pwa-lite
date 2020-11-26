@@ -1,4 +1,7 @@
-/* material design modules */ 
+import { LitElement, html, css } from 'lit-element'
+import page from 'page'
+
+/* material design modules */
 import '@material/mwc-drawer'
 import '@material/mwc-tab'
 import '@material/mwc-tab-bar'
@@ -9,21 +12,19 @@ import '@material/mwc-icon-button'
 import '@material/mwc-list'
 import '@material/mwc-list/mwc-list-item'
 import '@material/mwc-snackbar'
-import { LitElement, html, css } from 'lit-element'
 
-/* components */
-import './components/snack-bar.js'
-
-/* Be sure to async load the routing components when they need */
-const views = []
+/* components
+import './components/<>.js' */
 
 /* shared styles */
 import { sharedStyles } from './styles/shared-styles.js'
 
-class PwaLite extends LitElement {
+/* Be sure to async load the routing components when they need 
+const views = [] */
 
+class PwaLite extends LitElement {
   // properties
-  static get properties() {
+  static get properties () {
     return {
       title: String,
       offline: Boolean,
@@ -33,23 +34,33 @@ class PwaLite extends LitElement {
         type: Number,
         attribute: 'max-drawer-width'
       },
-      drawerMode: Boolean
+      drawerMode: Boolean,
+      currentView: String
     }
   }
 
-  constructor() {
+  constructor () {
     super()
     // init
     this.drawerIsOpen = false
     this.maxDrawerWidth = 800
     this.offline = !navigator.onLine
-    // listener for window.resize
+    // routing stuff (some binding)
+    this._initRoutes = this._initRoutes.bind(this)
+    this._homeRoute = this._homeRoute.bind(this)
+    this._oneRoute = this._oneRoute.bind(this)
+    this._twoRoute = this._twoRoute.bind(this)
+    this._notFoundRoute = this._notFoundRoute.bind(this)
+    // init the Routing
+    this._initRoutes()
+
+    // listener for window.resize (some binding)
     this._drawerOrTabsLayout = this._drawerOrTabsLayout.bind(this)
     this._goingOnline = this._goingOnline.bind(this)
     this._goingOffline = this._goingOffline.bind(this)
   }
 
-  connectedCallback() {
+  connectedCallback () {
     super.connectedCallback()
 
     // init the drawer or tabs layout
@@ -61,7 +72,7 @@ class PwaLite extends LitElement {
     window.addEventListener('offline', this._goingOffline)
   }
 
-  disconnectedCallback() {
+  disconnectedCallback () {
     // disconnect the callbacks
     window.removeEventListener('resize', this._drawerOrTabsLayout)
     window.removeEventListener('online', this._goingOnline)
@@ -70,7 +81,7 @@ class PwaLite extends LitElement {
     super.disconnectedCallback()
   }
 
-  static get styles() {
+  static get styles () {
     return [
       sharedStyles,
       css`
@@ -125,8 +136,62 @@ class PwaLite extends LitElement {
     ]
   }
 
+  // init routing service
+  _initRoutes () {
+    // you define some URL's patterns and some callbacks to call
+    // if the current URL matches those patterns
+    page.redirect('/', '/home')
+    page('/home', this._homeRoute)
+    page('/one/:label', this._oneRoute)
+    page('/two/:id', this._twoRoute)
+    page('*', this._notFoundRoute)
+    page()
+  }
+
+  // routing callback (data driven URLs model)
+  _homeRoute () {
+    this.currentView = 'home'
+    console.log('@ROUTE >> home')
+  }
+
+  _oneRoute (context) {
+    this.currentView = 'one'
+    const labelId = context.params.label || 'One'
+    const threads = this._getThreads(labelId)
+    console.log(`@ROUTE >> one (params: ${context.params.label}) ${threads}`)
+  }
+
+  _twoRoute (context) {
+    this.currentView = 'two'
+    const threadId = context.params.id || 0
+    const thread = this._getThread(threadId)
+    console.log(`@ROUTE >> two (params: ${context.params.id}) ${thread}`)
+  }
+
+  _notFoundRoute () {
+    this.currentView = 'notfound'
+    console.log('@ROUTE >> NOT Found!')
+  }
+
+  // routes helper functions
+  _getThreads (labelId) {
+    return [
+      `@Thread ${labelId + 0}@`,
+      `@Thread ${labelId + 1}@`,
+      `@Thread ${labelId + 2}@`
+    ]
+  }
+
+  _getThread (threadId) {
+    return `@Thread ${threadId}@`
+  }
+
+  _tabsRoute (event) {
+    console.log(`@EVENT (Detail) >> ${event.detail.index}`)
+  }
+
   // handle back online
-  _goingOnline() {
+  _goingOnline () {
     this.offline = false
     // TODO
     const snack = this.shadowRoot.querySelector('mwc-snackbar')
@@ -135,7 +200,7 @@ class PwaLite extends LitElement {
   }
 
   // handle going Offline
-  _goingOffline() {
+  _goingOffline () {
     this.offline = true
     // TODO
     const snack = this.shadowRoot.querySelector('mwc-snackbar')
@@ -144,7 +209,7 @@ class PwaLite extends LitElement {
   }
 
   // handle the drawer or tabs layout to render base on screen
-  _drawerOrTabsLayout() {
+  _drawerOrTabsLayout () {
     if (window.innerWidth > this.maxDrawerWidth) {
       this.drawerMode = false
     } else {
@@ -153,18 +218,34 @@ class PwaLite extends LitElement {
   }
 
   // open / close drawer
-  _handleDrawer() {
+  _handleDrawer () {
     this.drawerIsOpen = !this.drawerIsOpen
   }
 
-  // TODO 
-  _logSelected(event) {
+  // TODO (Debug Purpose)
+  _logSelected (event) {
     console.log(event.detail)
     console.log(event)
   }
 
-  render() {
+  _mainContent () {
+    return html`
+    <div class="main-content">
+      <p>Loreets nisi ut aliquip ex e id est laborum.</p>
+      <p>Loreets nisi ulllllllll anim id est laborum.</p>
+      <p>Loreets nisi ut  mollit anim id est laborum.</p>
 
+      <a href="/">Home</a>
+      <a href="/one/17">One</a>
+      <a href="/two/777">Two</a>
+      
+      <div style="width: 200px; height: 200px; background-color: red;"></div>
+      <div style="width: 300px; height: 200px; background-color: green;"></div>
+    </div>
+  `
+  }
+
+  render () {
     const drawerLayout = html`
       <mwc-drawer
             hasHeader 
@@ -234,13 +315,6 @@ class PwaLite extends LitElement {
                   ?aria-hidden="${!this.offline}">cloud_off</mwc-icon>
 
               </mwc-top-app-bar>
-              <div class="main-content">
-                <p>Loreets nisi ut aliquip ex e id est laborum.</p>
-                <p>Loreets nisi ulllllllll anim id est laborum.</p>
-                <p>Loreets nisi ut  mollit anim id est laborum.</p>
-                <div style="width: 200px; height: 200px; background-color: red;"></div>
-                <div style="width: 300px; height: 200px; background-color: green;"></div>
-              </div>
 
               <mwc-fab
                 id="fab-menu"
@@ -255,19 +329,12 @@ class PwaLite extends LitElement {
 
     const tabsLayout = html`
       <!-- Tabs --> 
-      <mwc-tab-bar>
+      <mwc-tab-bar @MDCTabBar:activated="${this._tabsRoute}">
         <mwc-tab label="one"></mwc-tab>
         <mwc-tab label="two"></mwc-tab>
         <mwc-tab label="three"></mwc-tab>
       </mwc-tab-bar>
     `
-
-    const snakbar = html`
-      <snack-bar>
-          <h1>YOu are OFFLINE </h1>
-      </snack-bar>
-    `
-
     const materialSnackbar = html`
       <mwc-snackbar>
          <mwc-icon-button icon="close" slot="dismiss"></mwc-icon-button>
@@ -275,11 +342,13 @@ class PwaLite extends LitElement {
     `
 
     return html`
-      ${this.drawerMode? drawerLayout : tabsLayout}
-      ${materialSnackbar}
+      <main>
+        ${this.drawerMode ? drawerLayout : tabsLayout}
+        ${this._mainContent()}
+      </main>
+        ${materialSnackbar}
     `
   }
-
 }
 
-customElements.define('pwa-lite', PwaLite)
+window.customElements.define('pwa-lite', PwaLite)
