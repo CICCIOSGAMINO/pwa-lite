@@ -4,7 +4,7 @@ PWA Lite - Simple Web Components App
 
 Simple web app template build on top of LitElement, Material Design and Web Platform.
 
-## /images 
+# /images 
 Images folder contains all the !important images the app needs, the app logo in svg format used in start splash screen, the icons, graphics and other graphics application content...  
 
 https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/
@@ -18,7 +18,7 @@ Use the script in the folder **script_svgtopng.sh** to create all the png images
 
 **To runs the script you need imageMagick and InkScape installed!**
 
-## WebApp Icons 
+# WebApp Icons 
 + icon .ico           : images/favicon.ico
 
 ## Android/Chrome
@@ -43,4 +43,30 @@ Use the script in the folder **script_svgtopng.sh** to create all the png images
 + big (310x310)     : images/manifest/icon310x310.png
 
 ## Handle the mwc-icon-button click 
-With LitElement at the base handling the click or other events on the material design mwc-icon-button it's easy as 
+With LitElement at the base handling the click or other events on the material design mwc-icon-button it's easy as
+
+# Async Tasks
+Async tasks can dispatch a CustomEvent with a promise into the detail payload, the main app component the *<pwa-lite>* extends the **PendingContainer** class to permit to the main app component to listening and set the **_hasPendingChildren** and **_pendingCount** properties. The **_pendingCount** is the actually active pending tasks (or children for a parent component) number, when no active pending tasks are present the **_hasPendingChildren** property is set to false, this property is binded to material design web component *</mwc-linear-progress>* to show into UI when tasks are active, of course you can build and handle a parent/child architecture with different components as a **PendingContainer** for async child tasks! Here the pattern implemented in *<pwa-lite>* : 
+```javascript
+// pending-container.js
+export const PendingContainer = (base) =>
+    ... 
+        _hasPendingChildren: Boolean,
+        _pendingCount: Number
+    ...
+  }
+
+// pwa-lite.js
+class PwaLite extends PendingContainer(LitElement) { 
+  ... 
+  render () {
+    return html`
+      <!-- Progress Bar for Async tasks -->
+      <mwc-linear-progress 
+        indeterminate 
+        .closed="${!this._hasPendingChildren}">
+      </mwc-linear-progress>
+    `
+  }
+}
+```

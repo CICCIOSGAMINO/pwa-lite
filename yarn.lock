@@ -9,10 +9,24 @@
   dependencies:
     tslib "^1.9.3"
 
+"@material/animation@9.0.0-canary.1c156d69d.0":
+  version "9.0.0-canary.1c156d69d.0"
+  resolved "https://registry.yarnpkg.com/@material/animation/-/animation-9.0.0-canary.1c156d69d.0.tgz#53acc1253d1286f6d4cfaf3a778229cbd19ab000"
+  integrity sha512-m3eUpFRwxcP1tEWJlIH5q77YGSYEe5ITRw5OtyDvxU7ZzF0xKJbBeauQEdCmyig9UvK+J7jUUnCgkT/t/ldLtw==
+  dependencies:
+    tslib "^1.9.3"
+
 "@material/base@8.0.0-canary.774dcfc8e.0", "@material/base@=8.0.0-canary.774dcfc8e.0":
   version "8.0.0-canary.774dcfc8e.0"
   resolved "https://registry.yarnpkg.com/@material/base/-/base-8.0.0-canary.774dcfc8e.0.tgz#be9e8ff6e8e366d74a6b2adea8edc7ee84b952b2"
   integrity sha512-638e0T0WUlsAW21hgFhMNN/MnCErKmuovzJjA/vwrhPRHKtxrIuTIkmX2G1yQ7LlNQWhKG7W32g9KNd06+PNGA==
+  dependencies:
+    tslib "^1.9.3"
+
+"@material/base@9.0.0-canary.1c156d69d.0":
+  version "9.0.0-canary.1c156d69d.0"
+  resolved "https://registry.yarnpkg.com/@material/base/-/base-9.0.0-canary.1c156d69d.0.tgz#84f365077dfae12a31a32bfc7f9ba673fe56b2db"
+  integrity sha512-r98qY6EsPx6BlzT0Pj+H+BTI7r76GEX/zZPgajxZjbPAJSeeK+uCh69Dmhf63meLKaFkKgvLwH5udKJLMqqjpQ==
   dependencies:
     tslib "^1.9.3"
 
@@ -77,6 +91,11 @@
   resolved "https://registry.yarnpkg.com/@material/feature-targeting/-/feature-targeting-8.0.0-canary.774dcfc8e.0.tgz#417361ead5031e6bbd72b6ac2e85b786829ff6e1"
   integrity sha512-XcCJOCZbk2kg41dTIvWd1iEJzl4rtGJ6ZK4o/FWQbczDJUcKN35je0+d/a/DvEh22t2Tj9M96n8HmTkS447Rhw==
 
+"@material/feature-targeting@9.0.0-canary.1c156d69d.0":
+  version "9.0.0-canary.1c156d69d.0"
+  resolved "https://registry.yarnpkg.com/@material/feature-targeting/-/feature-targeting-9.0.0-canary.1c156d69d.0.tgz#feaf37af156811a088958e653e6c08e66f567d2a"
+  integrity sha512-HWd0+GMnkVB3anmUc9+MeWCNoogAbb4U7ihzwq7lzLCQyC+i/kunppkUVV7DhL3ZVl1O6zIw1eAT+dgQpN8x4Q==
+
 "@material/icon-button@8.0.0-canary.774dcfc8e.0":
   version "8.0.0-canary.774dcfc8e.0"
   resolved "https://registry.yarnpkg.com/@material/icon-button/-/icon-button-8.0.0-canary.774dcfc8e.0.tgz#b4b421629ca0503bb66b0cfe6c8a909d86d6444f"
@@ -88,6 +107,18 @@
     "@material/ripple" "8.0.0-canary.774dcfc8e.0"
     "@material/rtl" "8.0.0-canary.774dcfc8e.0"
     "@material/theme" "8.0.0-canary.774dcfc8e.0"
+    tslib "^1.9.3"
+
+"@material/linear-progress@=9.0.0-canary.1c156d69d.0":
+  version "9.0.0-canary.1c156d69d.0"
+  resolved "https://registry.yarnpkg.com/@material/linear-progress/-/linear-progress-9.0.0-canary.1c156d69d.0.tgz#51325bd7c474aa9a610a552b45bb1332530f065b"
+  integrity sha512-m5D5e2EwO14YzHEcC8mc5GU45FMXtjmpTQmZGyyNcy88Dyc/V5fBUAmPJvWNHrhyLdkA2K0xcOzTdVvJInPdTQ==
+  dependencies:
+    "@material/animation" "9.0.0-canary.1c156d69d.0"
+    "@material/base" "9.0.0-canary.1c156d69d.0"
+    "@material/feature-targeting" "9.0.0-canary.1c156d69d.0"
+    "@material/progress-indicator" "9.0.0-canary.1c156d69d.0"
+    "@material/theme" "9.0.0-canary.1c156d69d.0"
     tslib "^1.9.3"
 
 "@material/list@8.0.0-canary.774dcfc8e.0", "@material/list@=8.0.0-canary.774dcfc8e.0":
@@ -166,6 +197,18 @@
   dependencies:
     lit-element "^2.3.0"
     tslib "^1.10.0"
+
+"@material/mwc-linear-progress@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@material/mwc-linear-progress/-/mwc-linear-progress-0.20.0.tgz#d98adb09fe0d90ff5a56e9750236865b2a00dfaf"
+  integrity sha512-if8NPXsEpSeQwd1Od1BQUv0An3MthFneZE6uzikzMBT7D/tcLEGVgvR4oGxZ7xXOtm/mwwaRS84pLkxbWcBypQ==
+  dependencies:
+    "@material/linear-progress" "=9.0.0-canary.1c156d69d.0"
+    "@material/theme" "=9.0.0-canary.1c156d69d.0"
+    "@types/resize-observer-browser" "^0.1.3"
+    lit-element "^2.3.0"
+    lit-html "^1.1.2"
+    tslib "^2.0.1"
 
 "@material/mwc-list@^0.19.1":
   version "0.19.1"
@@ -275,6 +318,13 @@
     lit-element "^2.3.0"
     lit-html "^1.1.2"
     tslib "^1.10.0"
+
+"@material/progress-indicator@9.0.0-canary.1c156d69d.0":
+  version "9.0.0-canary.1c156d69d.0"
+  resolved "https://registry.yarnpkg.com/@material/progress-indicator/-/progress-indicator-9.0.0-canary.1c156d69d.0.tgz#2a43d2c1442909874c5990b7ae893aced071a83d"
+  integrity sha512-56lYRqnUcI4L9a/LgfmzDTCKxxW1oOFqIVn3pMCP8hVGslhXY+yGl24qIp13MDW6FBgzx5rf66zB1rQltcSp/g==
+  dependencies:
+    tslib "^1.9.3"
 
 "@material/radio@=8.0.0-canary.774dcfc8e.0":
   version "8.0.0-canary.774dcfc8e.0"
@@ -395,6 +445,13 @@
   dependencies:
     "@material/feature-targeting" "8.0.0-canary.774dcfc8e.0"
 
+"@material/theme@9.0.0-canary.1c156d69d.0", "@material/theme@=9.0.0-canary.1c156d69d.0":
+  version "9.0.0-canary.1c156d69d.0"
+  resolved "https://registry.yarnpkg.com/@material/theme/-/theme-9.0.0-canary.1c156d69d.0.tgz#2d733dea8f762cc8e35969915dfb3b7359147d1e"
+  integrity sha512-r1610TPwUplt4FHMk7cR06Oz1jU/G31wBIh4Frs/YIB0ZonVlI5cZdIkG0IFtNt9ZYWoDwfP/1nQBxdqrDPPhg==
+  dependencies:
+    "@material/feature-targeting" "9.0.0-canary.1c156d69d.0"
+
 "@material/top-app-bar@=8.0.0-canary.774dcfc8e.0":
   version "8.0.0-canary.774dcfc8e.0"
   resolved "https://registry.yarnpkg.com/@material/top-app-bar/-/top-app-bar-8.0.0-canary.774dcfc8e.0.tgz#403e0cb2c8ae8539230a07aaa4a56c79b9d34d88"
@@ -425,6 +482,11 @@
   dependencies:
     "@material/feature-targeting" "8.0.0-canary.774dcfc8e.0"
     "@material/theme" "8.0.0-canary.774dcfc8e.0"
+
+"@types/resize-observer-browser@^0.1.3":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@types/resize-observer-browser/-/resize-observer-browser-0.1.4.tgz#84879a4d6d4aaefde53d4b29c91c0c4cbcffc26f"
+  integrity sha512-rPvqs+1hL/5hbES/0HTdUu4lvNmneiwKwccbWe7HGLWbnsLdqKnQHyWLg4Pj0AMO7PLHCwBM1Cs8orChdkDONg==
 
 blocking-elements@^0.1.0:
   version "0.1.1"
@@ -466,6 +528,11 @@ tslib@^1.10.0, tslib@^1.9.3:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
+
+tslib@^2.0.1:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
+  integrity sha512-uZtkfKblCEQtZKBF6EBXVZeQNl82yqtDQdv+eck8u7tdPxjLu2/lp5/uPW+um2tpuxINHWy3GhiccY7QgEaVHQ==
 
 wicg-inert@^3.0.0:
   version "3.1.0"

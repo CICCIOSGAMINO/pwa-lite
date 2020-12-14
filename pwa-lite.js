@@ -11,18 +11,20 @@ import '@material/mwc-icon'
 import '@material/mwc-icon-button'
 import '@material/mwc-list'
 import '@material/mwc-list/mwc-list-item'
+import '@material/mwc-linear-progress'
 import '@material/mwc-snackbar'
 
 /* components
 import './components/<>.js' */
+import { PendingContainer } from './components/pending-container'
 
 /* shared styles */
 import { sharedStyles } from './styles/shared-styles.js'
 
-/* Be sure to async load the routing components when they need 
+/* Be sure to async load the routing components when they need
 const views = [] */
 
-class PwaLite extends LitElement {
+class PwaLite extends PendingContainer(LitElement) {
   // properties
   static get properties () {
     return {
@@ -222,16 +224,25 @@ class PwaLite extends LitElement {
     this.drawerIsOpen = !this.drawerIsOpen
   }
 
-  // TODO (Debug Purpose)
-  _logSelected (event) {
-    console.log(event.detail)
-    console.log(event)
+  _firePendingState () {
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve()
+      }, 2000)
+    })
+    const event = new CustomEvent('pending-state', {
+      detail: {
+        title: 'Async task',
+        promise
+      }
+    })
+    this.dispatchEvent(event)
   }
 
   _mainContent () {
     return html`
     <div class="main-content">
-      <p>Loreets nisi ut aliquip ex e id est laborum.</p>
+      <p>this._hasPendingChildren ${this._hasPendingChildren}</p>
       <p>Loreets nisi ulllllllll anim id est laborum.</p>
       <p>Loreets nisi ut  mollit anim id est laborum.</p>
 
@@ -239,8 +250,7 @@ class PwaLite extends LitElement {
       <a href="/one/17">One</a>
       <a href="/two/777">Two</a>
       
-      <div style="width: 200px; height: 200px; background-color: red;"></div>
-      <div style="width: 300px; height: 200px; background-color: green;"></div>
+      <button @click="${this._firePendingState}">Fire Async task</button>
     </div>
   `
   }
@@ -342,10 +352,22 @@ class PwaLite extends LitElement {
     `
 
     return html`
+      <!-- Main -->
       <main>
+
+      <!-- Progress Bar for Async tasks -->
+      <mwc-linear-progress 
+        indeterminate 
+        .closed="${!this._hasPendingChildren}">
+      </mwc-linear-progress>
+
+      <!-- Layout --> 
         ${this.drawerMode ? drawerLayout : tabsLayout}
         ${this._mainContent()}
+
       </main>
+
+      <!-- Snackbar -->
         ${materialSnackbar}
     `
   }
