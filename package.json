@@ -6,6 +6,9 @@
   "repository": "https://github.com/CICCIOSGAMINO/pwa-lite.git",
   "author": "@cicciosgamino <marco.canali@gmail.com>",
   "license": "Apache2.0",
+  "scripts": {
+    "serve": "wds --node-resolve --watch --app-index index.html"
+  },
   "private": false,
   "dependencies": {
     "@material/mwc-drawer": "^0.19.1",
@@ -20,5 +23,8 @@
     "@material/mwc-top-app-bar": "^0.19.1",
     "lit-element": "^2.4.0",
     "page": "^1.11.6"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.0.29"
   }
 }

@@ -17,6 +17,8 @@ import '@material/mwc-snackbar'
 /* components
 import './components/<>.js' */
 import { PendingContainer } from './components/pending-container'
+import { views } from './components/views'
+import { lazyLoad } from './components/lazy-load'
 
 /* shared styles */
 import { sharedStyles } from './styles/shared-styles.js'
@@ -52,6 +54,7 @@ class PwaLite extends PendingContainer(LitElement) {
     this._homeRoute = this._homeRoute.bind(this)
     this._oneRoute = this._oneRoute.bind(this)
     this._twoRoute = this._twoRoute.bind(this)
+    this._threeRoute = this._threeRoute.bind(this)
     this._notFoundRoute = this._notFoundRoute.bind(this)
     // init the Routing
     this._initRoutes()
@@ -144,52 +147,41 @@ class PwaLite extends PendingContainer(LitElement) {
     // if the current URL matches those patterns
     page.redirect('/', '/home')
     page('/home', this._homeRoute)
-    page('/one/:label', this._oneRoute)
-    page('/two/:id', this._twoRoute)
+    page('/one', this._oneRoute)
+    page('/two', this._twoRoute)
+    page('/three', this._threeRoute)
     page('*', this._notFoundRoute)
     page()
   }
 
   // routing callback (data driven URLs model)
   _homeRoute () {
-    this.currentView = 'home'
-    console.log('@ROUTE >> home')
+    this.currentView = views.HOME
   }
 
-  _oneRoute (context) {
-    this.currentView = 'one'
-    const labelId = context.params.label || 'One'
-    const threads = this._getThreads(labelId)
-    console.log(`@ROUTE >> one (params: ${context.params.label}) ${threads}`)
+  _oneRoute () {
+    this.currentView = views.ONE
   }
 
-  _twoRoute (context) {
-    this.currentView = 'two'
-    const threadId = context.params.id || 0
-    const thread = this._getThread(threadId)
-    console.log(`@ROUTE >> two (params: ${context.params.id}) ${thread}`)
+  _twoRoute () {
+    this.currentView = views.TWO
+  }
+
+  _threeRoute () {
+    this.currentView = views.THREE
   }
 
   _notFoundRoute () {
-    this.currentView = 'notfound'
-    console.log('@ROUTE >> NOT Found!')
-  }
-
-  // routes helper functions
-  _getThreads (labelId) {
-    return [
-      `@Thread ${labelId + 0}@`,
-      `@Thread ${labelId + 1}@`,
-      `@Thread ${labelId + 2}@`
-    ]
-  }
-
-  _getThread (threadId) {
-    return `@Thread ${threadId}@`
+    this.currentView = views.NOTFOUND
   }
 
   _tabsRoute (event) {
-    console.log(`@EVENT (Detail) >> ${event.detail.index}`)
+    // retrieve the views (eg. home, one, two)
+    const view = Object.values(views)[event.detail.index]
+    // handle the tab with page.js API (CustomEvent is possible too)
+    if (view) {
+      page(`/${view}`)
+    }
   }
 
   // handle back online
@@ -224,6 +216,7 @@ class PwaLite extends PendingContainer(LitElement) {
     this.drawerIsOpen = !this.drawerIsOpen
   }
 
+  // TODO - Test Async tasks
   _firePendingState () {
     const promise = new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -239,20 +232,40 @@ class PwaLite extends PendingContainer(LitElement) {
     this.dispatchEvent(event)
   }
 
-  _mainContent () {
-    return html`
-    <div class="main-content">
-      <p>this._hasPendingChildren ${this._hasPendingChildren}</p>
-      <p>Loreets nisi ulllllllll anim id est laborum.</p>
-      <p>Loreets nisi ut  mollit anim id est laborum.</p>
-
-      <a href="/">Home</a>
-      <a href="/one/17">One</a>
-      <a href="/two/777">Two</a>
-      
-      <button @click="${this._firePendingState}">Fire Async task</button>
-    </div>
-  `
+  // Helper function to render the MainContent
+  _renderMainContent () {
+    switch (this.currentView) {
+      case views.HOME:
+        return lazyLoad(
+          import('./views/view-home'),
+          html`
+            <view-home 
+              ._hasPendingChildren="${this._hasPendingChildren}"
+              ._pendingCount="${this._pendingCount}">
+            </view-home>
+            `
+        )
+      case views.ONE:
+        return lazyLoad(
+          import('./views/view-one'),
+          html`<view-one></view-one>`
+        )
+      case views.TWO:
+        return lazyLoad(
+          import('./views/view-two'),
+          html`<view-two></view-two>`
+        )
+      case views.THREE:
+        return lazyLoad(
+          import('./views/view-three'),
+          html`<view-three></view-three>`
+        )
+      default:
+        return lazyLoad(
+          import('./views/view-notfound'),
+          html`<view-notfound></view-notfound>`
+        )
+    }
   }
 
   render () {
@@ -340,6 +353,7 @@ class PwaLite extends PendingContainer(LitElement) {
     const tabsLayout = html`
       <!-- Tabs --> 
       <mwc-tab-bar @MDCTabBar:activated="${this._tabsRoute}">
+        <mwc-tab label="home"></mwc-tab>
         <mwc-tab label="one"></mwc-tab>
         <mwc-tab label="two"></mwc-tab>
         <mwc-tab label="three"></mwc-tab>
@@ -363,7 +377,7 @@ class PwaLite extends PendingContainer(LitElement) {
 
       <!-- Layout --> 
         ${this.drawerMode ? drawerLayout : tabsLayout}
-        ${this._mainContent()}
+        ${this._renderMainContent()}
 
       </main>
 
