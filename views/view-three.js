@@ -1,5 +1,5 @@
 // view-three (Three)
-import { html, css, LitElement } from 'lit-element'
+import { html, css, LitElement } from 'lit'
 
 class ViewThree extends LitElement {
   static get properties () {

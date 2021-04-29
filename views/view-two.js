@@ -1,5 +1,5 @@
 // view-two (Two)
-import { html, css, LitElement } from 'lit-element'
+import { html, css, LitElement } from 'lit'
 
 class ViewTwo extends LitElement {
   static get properties () {

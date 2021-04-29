@@ -1,6 +1,3 @@
-import { css } from 'lit-element'
+import { css } from 'lit'
 
-export const sharedStyles = css`
- 
-
-`
+export const sharedStyles = css``

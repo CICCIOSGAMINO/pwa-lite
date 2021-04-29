@@ -1,8 +1,8 @@
 PWA Lite - Simple Web Components App 
-=====================================
+====================================
 [TOC]
 
-Simple web app template build on top of LitElement, Material Design and Web Platform. This PWA template is based on the bright way showed us from Polymer project and all web entusiast!
+Simple web app template build on top of [Lit](https://github.com/lit) , Material Design and Web Platform. This PWA template is based on the bright way showed us from Polymer project and all web entusiast!
 
 # /images 
 Images folder contains all the !important images the app needs, the app logo in svg format used in start splash screen, the icons, graphics and other graphics application content...  
@@ -45,8 +45,9 @@ Use the script in the folder **script_svgtopng.sh** to create all the png images
 ## Handle the mwc-icon-button click 
 With LitElement at the base handling the click or other events on the material design mwc-icon-button it's easy as
 
-# Dynamic Import
-The key in speed up the laoding time it's avoid the static imports whenever is possible. Preferred dynamic imports they're going to be better for reduce code size down the wire. This pattern is implemented here with the little helper function **lazyLoad**, basically creates a place to put a dynamic import and it takes a template that just going to pass the template forward and render that template when the dynamic import is done.
+# Views Dynamic Import
+The key in speed up the loading time it's avoid the static imports whenever is possible. Preferred dynamic imports they're going to be better for reduce code size down the wire. This pattern is implemented here with the little helper function **lazyLoad**, basically creates a place to put a dynamic import and it takes a template that just going to pass the template forward and render that template when the dynamic import is done.
+
 ```javascript
 class LitMailApp extends LitElement {
   // ... 

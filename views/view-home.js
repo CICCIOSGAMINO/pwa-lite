@@ -1,5 +1,5 @@
 // view-home (Home)
-import { html, css, LitElement } from 'lit-element'
+import { html, css, LitElement } from 'lit'
 
 class ViewHome extends LitElement {
   static get properties () {

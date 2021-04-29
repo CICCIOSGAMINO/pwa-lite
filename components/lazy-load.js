@@ -1,21 +1,23 @@
-import { directive } from 'lit-html'
+import { AsyncDirective, directive } from 'lit/async-directive.js'
 
-const resolved = new WeakSet()
-export const lazyLoad = directive((importPromise, value) =>
-  (part) => {
-    if (!resolved.has(part)) {
-      importPromise.then(() => resolved.add(part))
-      // signal the pending work to PendingContainer
-      const event = new CustomEvent('pending-state', {
-        composed: true,
-        bubbles: true,
-        detail: {
-          promise: importPromise
-        }
-      })
-      if (part.startNode.prentNode) {
-        part.startNode.parentNode.dispatchEvent(event)
+class LazyLoad extends AsyncDirective {
+  update (part, [importPromise, value]) {
+    // signal the pending work to PendingContainer
+    const ce = new CustomEvent('pending-state', {
+      composed: false,
+      bubbles: true,
+      detail: {
+        promise: importPromise
       }
-    }
-    part.setValue(value)
-  })
+    })
+
+    part.parentNode.dispatchEvent(ce)
+
+    importPromise.then(module => {
+      // module imported
+      this.setValue(value)
+    })
+  }
+}
+
+export const lazyLoad = directive(LazyLoad)

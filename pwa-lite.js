@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit-element'
+import { LitElement, html, css } from 'lit'
 import page from 'page'
 
 /* material design modules */
@@ -14,17 +14,13 @@ import '@material/mwc-list/mwc-list-item'
 import '@material/mwc-linear-progress'
 import '@material/mwc-snackbar'
 
-/* components
-import './components/<>.js' */
+/* components */
 import { PendingContainer } from './components/pending-container'
 import { views } from './components/views'
 import { lazyLoad } from './components/lazy-load'
 
 /* shared styles */
 import { sharedStyles } from './styles/shared-styles.js'
-
-/* Be sure to async load the routing components when they need
-const views = [] */
 
 class PwaLite extends PendingContainer(LitElement) {
   // properties

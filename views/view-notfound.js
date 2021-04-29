@@ -1,5 +1,5 @@
 // view-notfound (Not Found page)
-import { html, css, LitElement } from 'lit-element'
+import { html, css, LitElement } from 'lit'
 
 class ViewNotfound extends LitElement {
   static get styles () {
